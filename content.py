@@ -89,7 +89,7 @@ card_scatter = dbc.Card(
             [
                 dbc.Spinner(size="md",color="light",
                     children=[
-                        html.Div("Scatter Plot")
+                        dcc.Graph(id="numerical_scatter_graph", config = {"displayModeBar": False}, style = {"height": "48vh"})
                     ]
                 ),
                 

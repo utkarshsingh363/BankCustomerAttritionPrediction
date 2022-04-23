@@ -2,14 +2,15 @@ import pandas as pd
 from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
+import matplotlib as plt
+import copy
 
 from src.navbar import get_navbar
-from src.graphs import df,layout
+from src.graphs import df,layout,dist_plot,box_plot, scatter_plot
 import plotly.express as px
-import copy
 from content import tab_prediction_features,tab_dataAnalysis_features,tab_modelAnalysis_features
 import time
-import plotly.figure_factory as ff
+
 
 app = Dash(__name__,external_stylesheets = [dbc.themes.SUPERHERO,'/assets/styles.css'])
 
@@ -149,31 +150,33 @@ def bar_categorical(feature):
 
 def density_numerical(feature):
     time.sleep(0.2)
-
-    print(f"Featute--->{feature}")
-
-    x1 = df[df['Exited'] == '0'][feature]
-    x2 = df[df['Exited'] == '1'][feature]
-
-
-    fig = ff.create_distplot([x1,x2], group_labels= ['0', '1'],
-                             bin_size=3,
-                             curve_type='kde',
-                             show_rug=False,
-                             show_hist=False,
-                             show_curve=True,
-                             colors=['#47acb1','#f26522'])
-    
-    layout_count = copy.deepcopy(layout)
-    fig.update_layout(layout_count)
-    
-    fig.update_layout(
-        title = {'text': f"KDE of {feature}", 'x': 0.5},
-        legend = {'x': 0.25}
-    )
-    
+    fig=dist_plot(feature)
     return fig
 
+
+@app.callback(
+    Output("numerical_box_graph", "figure"),
+    [
+        Input("numerical_dropdown", "value"),
+    ],
+)
+
+def box_numerical(feature):
+    time.sleep(0.2)
+    fig=box_plot(feature)
+    return fig
+
+@app.callback(
+    Output("numerical_scatter_graph", "figure"),
+    [
+        Input("numerical_dropdown", "value"),
+    ],
+)
+
+def scatter_numerical(feature):
+    time.sleep(0.2)
+    fig=scatter_plot(feature)
+    return fig
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
