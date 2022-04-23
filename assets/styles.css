@@ -32,3 +32,56 @@ html,body{
     margin-top: 2vh;
     height: 46vh;
 }
+
+.btn-predict {
+    background-color: #206a5d;
+}
+
+.result-card {
+    background-color: #16103a;
+    text-align: center;
+}
+
+.form-control {
+    background-color: #16103a;
+    color: #e0e1e6;
+}
+
+
+/* ----------- */
+@media (max-width: 768px) {
+    .col-sm-12 {
+        padding-bottom: 20px;
+    }
+
+    .card-padding {
+        padding-bottom: 4vh;
+    }
+
+}
+
+@media (min-width: 768px) {
+    .feature-row {
+        padding-bottom: 4vh;
+    }
+
+}
+
+
+
+.bg-primary {
+    background-color: #272953 !important;
+}
+
+body {
+  background-color: #16103a;
+}
+
+.container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 1340px !important;
+}
+
+.card-body {
+    padding: 0.75rem;
+    /*background-color: #272953; */
+}

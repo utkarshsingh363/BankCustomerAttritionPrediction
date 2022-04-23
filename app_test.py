@@ -8,7 +8,7 @@ import copy
 from src.navbar import get_navbar
 from src.graphs import df,layout,dist_plot,box_plot, scatter_plot
 import plotly.express as px
-from content import tab_prediction_features,tab_dataAnalysis_features,tab_modelAnalysis_features
+from content import tab_prediction_features,tab_dataAnalysis_features,tab_modelAnalysis_features,tab_prediction_content
 import time
 
 
@@ -34,7 +34,7 @@ tabs = dbc.Tabs(
     [
         dbc.Tab(tab_dataAnalysis_features, label="Data Analysis"),
         dbc.Tab(tab_modelAnalysis_features, label="Model Analysis"),
-        dbc.Tab(tab_prediction_features, label="Prediction"),
+        dbc.Tab(tab_prediction_content, label="Prediction"),
         
     ]
 )
