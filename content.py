@@ -2,23 +2,7 @@ from turtle import width
 import dash_bootstrap_components as dbc
 from dash import html
 from dash import dcc
-from dash import html
-
-tab_modelAnalysis_features = dbc.Card(
-    [
-        dbc.CardBody(
-            [
-                html.H4("Model Analysis", className="card-title"),
-                html.P(
-                    "Here we will have Results of different models",
-                    className="card-text",
-                ),
-                dbc.Button("Do Something", color="primary"),
-            ]
-        ),
-    ],
-    style={"width": "18rem"},
-)
+import dash_html_components as html
 
 card_donut = dbc.Card(
     [
@@ -98,6 +82,115 @@ card_scatter = dbc.Card(
     ],
     style = {"background-color": "#283748"}
 )
+
+card_ROC_Plot=dbc.Card(
+    [
+        dbc.CardBody([
+                dbc.Spinner(size="md",color="light",
+                    children=[
+                        dcc.Graph(id="model_ROC_graph", config = {"displayModeBar": False}, style = {"height": "48vh"})
+                    ]
+                ),
+        ])
+    ],style = {"background-color": "#283748"}
+)
+
+card_featureImportance=dbc.Card(
+    [
+        dbc.CardBody([
+                dbc.Spinner(size="md",color="light",
+                    children=[
+                        dcc.Graph(id="model_featureImportance", config = {"displayModeBar": False}, style = {"height": "48vh"})
+                    ]
+                ),
+        ])
+    ],style = {"background-color": "#283748"}
+)
+
+tab_modelAnalysis_features=html.Div([
+    html.H4("Model Analysis", className="card-title"),
+    html.Div([
+        dbc.InputGroup([
+            dbc.Select(                            
+                options=[
+                    {"label": "Logistic Regression", "value": "lr"},
+                    {"label": "Support Vector Machine", "value": "svm"},
+                    {"label": "Random Forest", "value": "rf"},
+                    {"label": "XG Boost", "value": "xgb"},
+                ], id = "model_dropdown", value="lr",
+            )
+        ]),
+    ]),
+    dbc.Row([
+        dbc.Col([
+            dbc.Card(
+                dbc.CardBody(
+                    [
+                        dbc.Spinner(html.H4(id="accuracy", children="-", style={'color':'#e7b328'}), size="sm", spinner_style={'margin-bottom': '5px'}),
+                        html.P("Accuracy")
+                    ]
+                ), className="result-card", style={"height":"16vh"}
+            )
+        ],lg=4, sm=6, className=".card-padding-modelAnalysis"),
+        dbc.Col([
+            dbc.Card(
+                dbc.CardBody(
+                    [
+                        dbc.Spinner(html.H4(id="sensitivity", children="-", style={'color':'#e7b328'}), size="sm", spinner_style={'margin-bottom': '5px'}),
+                        html.P("Sensitivity")
+                    ]
+                ), className="result-card", style={"height":"16vh"}
+            )
+        ],lg=4, sm=6, className="card-padding-modelAnalysis"),
+        dbc.Col([
+            dbc.Card(
+                dbc.CardBody(
+                    [
+                        dbc.Spinner(html.H4(id="specificity", children="-", style={'color':'#e7b328'}), size="sm", spinner_style={'margin-bottom': '5px'}),
+                        html.P("Specificity")
+                    ]
+                ), className="result-card", style={"height":"16vh"}
+            )
+        ],lg=4, sm=6, className="card-padding-modelAnalysis"),
+    ]),
+   dbc.Row([
+        dbc.Col([
+            dbc.Card(
+                dbc.CardBody(
+                    [
+                        dbc.Spinner(html.H4(id="auc", children="-", style={'color':'#e7b328'}), size="sm", spinner_style={'margin-bottom': '5px'}),
+                        html.P("AUC")
+                    ]
+                ), className="result-card", style={"height":"16vh"}
+            )
+        ],lg=4, sm=6, className="card-padding-modelAnalysis"),
+        dbc.Col([
+            dbc.Card(
+                dbc.CardBody(
+                    [
+                        dbc.Spinner(html.H4(id="f1", children="-", style={'color':'#e7b328'}), size="sm", spinner_style={'margin-bottom': '5px'}),
+                        html.P("F-1 Score")
+                    ]
+                ), className="result-card", style={"height":"16vh"}
+            )
+        ],lg=4, sm=6, className="card-padding-modelAnalysis"),
+        dbc.Col([
+            dbc.Card(
+                dbc.CardBody(
+                    [
+                        dbc.Spinner(html.H4(id="testTrainSplit", children="20% - 80%", style={'color':'#e7b328'}), size="sm", spinner_style={'margin-bottom': '5px'}),
+                        html.P("Test - Train Split")
+                    ]
+                ), className="result-card", style={"height":"16vh"}
+            )
+        ],lg=4, sm=6, className="card-padding-modelAnalysis"),
+    ]),
+    dbc.Row([
+        dbc.Col(card_ROC_Plot, lg="6", sm=12),
+        dbc.Col(card_featureImportance, lg="6", sm=12),
+    ])
+],className="mt-3", style = {"background-color": "#272953","padding":'10px'})
+
 
 tab_dataAnalysis_features = html.Div(
             [

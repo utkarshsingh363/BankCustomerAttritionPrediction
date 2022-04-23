@@ -5,6 +5,59 @@ import copy
 import plotly.figure_factory as ff
 import scipy
 import plotly.express as px
+import joblib
+import pickle
+from sklearn import metrics
+
+# Model Read
+svm_path = 'data/svm_model.sav'
+with open(svm_path, "rb") as f:
+    svm_Model = pickle.load(f)
+    svm_accuracy = pickle.load(f)
+    svm_f1=pickle.load(f)
+    svm_specificity = pickle.load(f)
+    svm_sensitivity = pickle.load(f)
+    svm_auc = pickle.load(f)
+    svm_feat_importances = pickle.load(f)
+    svm_fpr = pickle.load(f)
+    svm_tpr = pickle.load(f)
+
+xgb_path = 'data/xgb_model.sav'
+with open(xgb_path, "rb") as f:
+    xgb_Model = pickle.load(f)
+    xgb_accuracy = pickle.load(f)
+    xgb_f1=pickle.load(f)
+    xgb_specificity = pickle.load(f)
+    xgb_sensitivity = pickle.load(f)
+    xgb_auc = pickle.load(f)
+    xgb_feat_importances = pickle.load(f)
+    xgb_fpr = pickle.load(f)
+    xgb_tpr = pickle.load(f)
+
+lr_path = 'data/lr_model.sav'
+with open(lr_path, "rb") as f:
+    lr_Model = pickle.load(f)
+    lr_accuracy = pickle.load(f)
+    lr_f1=pickle.load(f)
+    lr_specificity = pickle.load(f)
+    lr_sensitivity = pickle.load(f)
+    lr_auc = pickle.load(f)
+    lr_feat_importances = pickle.load(f)
+    lr_fpr = pickle.load(f)
+    lr_tpr = pickle.load(f)
+
+rf_path = 'data/rf_model.sav'
+with open(rf_path, "rb") as f:
+    rf_Model = pickle.load(f)
+    rf_accuracy = pickle.load(f)
+    rf_f1=pickle.load(f)
+    rf_specificity = pickle.load(f)
+    rf_sensitivity = pickle.load(f)
+    rf_auc = pickle.load(f)
+    rf_feat_importances = pickle.load(f)
+    rf_fpr = pickle.load(f)
+    rf_tpr = pickle.load(f)
+
 
 layout = dict(
     autosize=True,
@@ -92,3 +145,110 @@ def scatter_plot(feature):
 
     return fig
     
+def roc_plot(feature):
+    if feature=='lr':
+        print("LR")
+        fpr=lr_fpr
+        tpr=lr_tpr
+    elif feature=='svm':
+        print('SVM')
+        fpr=svm_fpr
+        tpr=svm_tpr
+    elif feature=='rf':
+        print("RF")
+        fpr=rf_fpr
+        tpr=rf_tpr
+    else:
+        print("XGB")
+        fpr=xgb_fpr
+        tpr=xgb_tpr
+
+    score = metrics.auc(fpr, tpr)
+    
+    fig = px.area(
+        x=fpr, y=tpr,
+        title=f'ROC Curve',
+        labels=dict(
+            x='False Positive Rate', 
+            y='True Positive Rate'))
+    fig.add_shape(
+        type='line', line=dict(dash='dash'),
+        x0=0, x1=1, y0=0, y1=1)
+
+    return fig
+
+def featureImportance_plot(feature):
+    if feature=='lr':
+        print("LR")
+        featureImportance=lr_feat_importances
+    elif feature=='svm':
+        print('SVM')
+        featureImportance=svm_feat_importances
+    elif feature=='rf':
+        print("RF")
+        featureImportance=rf_feat_importances
+    else:
+        print("XGB")
+        featureImportance=xgb_feat_importances
+
+    featureImportance_Frame=featureImportance.to_frame().reset_index()
+
+    fig = px.bar(featureImportance_Frame[::-1], x=0, y='index')
+
+
+    return fig
+
+def accuracyResult(feature):
+    if feature=='lr':
+        return lr_accuracy
+    elif feature=='svm':
+        return svm_accuracy
+    elif feature=='rf':
+        return rf_accuracy
+    else:
+        return xgb_accuracy
+
+def sensitivityResult(feature):
+    if feature=='lr':
+        return lr_sensitivity
+    elif feature=='svm':
+        return svm_sensitivity
+    elif feature=='rf':
+        return rf_sensitivity
+    else:
+        return xgb_sensitivity
+
+
+def specificityResult(feature):
+    if feature=='lr':
+        return lr_specificity
+    elif feature=='svm':
+        return svm_specificity
+    elif feature=='rf':
+        return rf_specificity
+    else:
+        return xgb_specificity
+
+def aucResult(feature):
+    if feature=='lr':
+        return lr_auc
+    elif feature=='svm':
+        return svm_auc
+    elif feature=='rf':
+        return rf_auc
+    else:
+        return xgb_auc
+
+def f1Result(feature):
+    if feature=='lr':
+        return lr_f1
+    elif feature=='svm':
+        return svm_f1
+    elif feature=='rf':
+        return rf_f1
+    else:
+        return xgb_f1
+
+
+        
+        

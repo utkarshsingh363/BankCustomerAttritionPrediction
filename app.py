@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 from dash import Dash, dcc, html, Input, Output  # pip install dash (version 2.0.0 or higher)
 import dash_bootstrap_components as dbc
 
+
 from src.navbar import get_navbar   # navbar function
 
 app = Dash(__name__,external_stylesheets = [dbc.themes.SUPERHERO,'/assets/styles.css'])

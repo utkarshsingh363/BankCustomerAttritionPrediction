@@ -47,6 +47,10 @@ html,body{
     color: #e0e1e6;
 }
 
+.card-padding-modelAnalysis {
+    padding: 5px 10px ;
+}
+
 
 /* ----------- */
 @media (max-width: 768px) {
