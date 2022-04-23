@@ -2,9 +2,11 @@ import pandas as pd
 import plotly.express as px  # (version 4.7.0 or higher)
 import plotly.graph_objects as go
 from dash import Dash, dcc, html, Input, Output  # pip install dash (version 2.0.0 or higher)
+import dash_bootstrap_components as dbc
 
+from src.navbar import get_navbar   # navbar function
 
-app = Dash(__name__)
+app = Dash(__name__,external_stylesheets = [dbc.themes.SUPERHERO,'/assets/styles.css'])
 
 # -- Import and clean data (importing csv into pandas)
 # df = pd.read_csv("bank_user_data.csv")
@@ -16,25 +18,27 @@ print(df[:5])
 
 # ------------------------------------------------------------------------------
 # App layout
-app.layout = html.Div([
 
+
+app.layout = html.Div([
+    get_navbar(),
     html.H1("Web Application Dashboards with Dash", style={'text-align': 'center'}),
 
-    dcc.Dropdown(id="slct_year",
-                 options=[
-                     {"label": "2015", "value": 2015},
-                     {"label": "2016", "value": 2016},
-                     {"label": "2017", "value": 2017},
-                     {"label": "2018", "value": 2018}],
-                 multi=False,
-                 value=2015,
-                 style={'width': "40%"}
-                 ),
+    # dcc.Dropdown(id="slct_year",
+    #              options=[
+    #                  {"label": "2015", "value": 2015},
+    #                  {"label": "2016", "value": 2016},
+    #                  {"label": "2017", "value": 2017},
+    #                  {"label": "2018", "value": 2018}],
+    #              multi=False,
+    #              value=2015,
+    #              style={'width': "40%"}
+    #              ),
 
-    html.Div(id='output_container', children=[]),
-    html.Br(),
+    # html.Div(id='output_container', children=[]),
+    # html.Br(),
 
-    dcc.Graph(id='my_bee_map', figure={})
+    # dcc.Graph(id='my_bee_map', figure={})
 
 ])
 
@@ -92,4 +96,4 @@ def update_graph(option_slctd):
 
 # ------------------------------------------------------------------------------
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(host='127.0.0.1', port=3000,debug=True)

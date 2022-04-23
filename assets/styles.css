@@ -1,0 +1,34 @@
+html,body{
+    overflow-x: hidden;
+}
+
+#mainContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 0% 2%;
+  }
+
+.cover {
+    /* background-color: #272953; */
+    text-align: center;
+    /* background-image: url("cover.png"); */
+    /* background-color: #16103a; */
+    background-size: 110%;
+    background-position: center;
+    background-repeat: repeat-x;
+}
+
+.footer {
+    text-align: center;
+    /* background-color: #16103a; */
+    color: rgba(190, 190, 190, 0.75);
+    margin: 2rem 0rem;
+}
+
+.customer-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2vh;
+    height: 46vh;
+}
